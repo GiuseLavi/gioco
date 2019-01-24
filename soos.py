@@ -42,6 +42,7 @@ class Monster(Entity):
 
 	def attack(self, player):
 
+		print("Il mostro ti attacca")
 		player.cur_hp -= self.damage
 
 
@@ -61,21 +62,23 @@ class World:
 
 			if i != p_y and i != m_y and i != e_y:
 
-				print("[ ]", end = "")
+				for n in range(self.x):
+
+					print("[ ]", end = "")
 
 			elif i in c:
 
 				for n in range(self.x):
 
-					if n == p_x:
+					if n == p_x and i == p_y:
 
 						print("[P]", end = "")
 
-					elif n == m_x:
+					elif n == m_x and i == m_y:
 
 						print("[M]", end = "")
 
-					elif n == e_x:
+					elif n == e_x and i == e_y:
 
 						print("[E]", end = "")
 
@@ -84,3 +87,26 @@ class World:
 
 			print()
 
+p_x = 0
+p_y = 0
+m_x = 8
+m_y = 6
+e_x = 4
+e_y = 2
+
+lv1 = World(10,10)
+player = Player(p_x, p_y, 100)
+monster = Monster(e_x, e_y, 20)
+medal = Entity(m_x, m_y)
+	
+lv1.draw(p_x, p_y, m_x, m_y, e_x, e_y)
+
+while True:
+
+	player.move(lv1.x, lv1, input())
+	lv1.draw(player.x, player.y, m_x, m_y, e_x, e_y)
+
+	if player.x == m_x and player.y == m_y:
+
+		print("hai vinto")
+		break
